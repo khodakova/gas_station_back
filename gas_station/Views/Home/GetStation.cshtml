@@ -1,0 +1,37 @@
+﻿@model gas_station.Models.StationModel
+
+@{
+    ViewData["Title"] = "GetStation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>GetStation</h1>
+
+<div>
+    <h4>StationModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.placeId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.placeId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.note)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.note)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
