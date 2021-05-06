@@ -22,13 +22,27 @@ namespace gas_station.Controllers
 
         public IActionResult Index()
         {
-            ViewData.Model = _DBContext.StationModels.OrderBy(item=>item.id).ToList();
+            ViewData.Model = _DBContext.Stations.OrderBy(item=>item.Id).ToList();
+            return View();
+        }
+        [HttpGet]
+        public IActionResult GetStation(int id)
+        {
+            ViewData.Model = _DBContext.Stations.FirstOrDefault(i => i.Id == id);
             return View();
         }
 
-        public IActionResult GetStation(int id)
+        [HttpPost]
+        public IActionResult EditEmployee(EmployeeModel EmployeeModel)
         {
-            ViewData.Model = _DBContext.StationModels.FirstOrDefault(i => i.id == id);
+            var fromDB = _DBContext.Employees.Find(EmployeeModel.Id);
+            fromDB.LastName = EmployeeModel.LastName;
+            fromDB.FirstName = EmployeeModel.FirstName;
+            fromDB.MiddleName = EmployeeModel.MiddleName;
+            fromDB.Code = EmployeeModel.Code;
+            fromDB.Position = EmployeeModel.Position;
+            _DBContext.SaveChanges();
+
             return View();
         }
 

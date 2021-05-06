@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 
 namespace gas_station.Models
 {
-    public class StationModel
+    public class StationModel : ParentModel
     {
-        [Key]
-        public int id { get; set; }
-        [Display(Name = "Название")]
-        public string name { get; set; }
-        public int placeId { get; set; }
-        [Display(Name = "Комментарий")]
-        public string note { get; set; }
-        public bool status { get; set; }
-        public DateTime createDate { get; set; }
-        public DateTime updateDate { get; set; }
 
+        [Display(Name = "Название")]
+        public override string Name { get => base.Name; set => base.Name = value; }
+        [Display(Name = "Адрес")]
+        public string Address { get; set; }
+        [Display(Name = "Комментарий")]
+        public string Note { get; set; }
+        [Display(Name = "Статус")]
+        public bool Status { get; set; }
+        public List<EmployeeModel> Employees { get; set; } = new List<EmployeeModel>();
     }
 }

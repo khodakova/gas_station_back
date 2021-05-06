@@ -8,22 +8,33 @@ namespace gas_station.Models
 {
     public class DBContext : DbContext
     {
-        public DbSet<StationModel> StationModels { get; set; }
+        public DbSet<StationModel> Stations { get; set; }
+        public DbSet<DeliveryItemModel> DeliveryItems { get; set; }
+        public DbSet<DeliveryModel> Deliveries { get; set; }
+        public DbSet<EmployeeModel> Employees { get; set; }
+        public DbSet<FuelModel> Fuels { get; set; }
+        public DbSet<FuelTypeModel> FuelTypes { get; set; }
+        public DbSet<ManModel> Men { get; set; }
+        public DbSet<OrderModel> Orders { get; set; }
+        public DbSet<PositionModel> Positions { get; set; }
+        public DbSet<PriceListModel> PriceLists { get; set; }
+        public DbSet<UserModel> Users { get; set; }
+        public DbSet<StorageModel> Storage { get; set; }
 
         public DBContext(DbContextOptions<DBContext> dbContextOptions) : base(dbContextOptions)
         {
             Database.EnsureCreated();
-            if (!StationModels.Any())
+            if (!Stations.Any())
             {
-                StationModels.Add(new StationModel
+                Stations.Add(new StationModel
                 {
-                    name = "ёпта",
-                    note = "атата"
+                    Name = "ёпта",
+                    Note = "атата"
                 });
-                StationModels.Add(new StationModel
+                Stations.Add(new StationModel
                 {
-                    name = "ёпта1",
-                    note = "атата1"
+                    Name = "ёпта1",
+                    Note = "атата1"
                 });
                 SaveChanges();
             }
