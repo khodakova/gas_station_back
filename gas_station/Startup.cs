@@ -27,8 +27,11 @@ namespace gas_station
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            // настраиваем связку БД и приложения
             services.AddDbContext<DBContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            // подключение swagger
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +51,14 @@ namespace gas_station
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            // задействование swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BurstTime");
+                c.RoutePrefix = "swagger";
+            });
 
             app.UseAuthorization();
 

@@ -38,6 +38,30 @@ namespace gas_station.Models
                 });
                 SaveChanges();
             }
+            if (!Men.Any())
+            {
+                Men.Add(new ManModel
+                {
+                    FirstName = "Администратор",
+                    LastName = "Администратов",
+                    MiddleName = "Администратович",
+                    Birthdate = new DateTime(1995, 1, 1),
+                    Status = true,
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now
+                });
+                Men.Add(new ManModel
+                {
+                    FirstName = "Недерживсебе",
+                    LastName = "Пупков",
+                    MiddleName = "Прокопьевич",
+                    Birthdate = new DateTime(1997, 1, 1),
+                    Status = true,
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now
+                });
+                SaveChanges();
+            }
         }
     }
 }
