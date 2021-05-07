@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 
 namespace gas_station.Models
 {
-    public class OrderModel : ParentModel
+    public class Order : Parent
     {
         [Display(Name = "Создатель заказа")]
-        public int CreateBy { get; set; }
-        public UserModel User { get; set; }
-        [Display(Name = "На кого заказ")]
-        public int ManId { get; set; }
-        public ManModel Man { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
         [Display(Name = "Единица топлива")]
         public int FuelId { get; set; }
-        public FuelModel Fuel { get; set; }
+        public Fuel Fuel { get; set; }
         [Display(Name = "Объем")]
         public float Value { get; set; }
         [Display(Name = "Скидка")]

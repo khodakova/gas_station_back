@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace gas_station.Models
 {
-    public class PriceListModel : ParentModel
+    public class PriceList : Parent
     {
         [Display(Name = "Дата начала действия цены")]
         public DateTime BeginDate { get; set; }
@@ -14,7 +14,7 @@ namespace gas_station.Models
         public DateTime EndDate { get; set; }
         [Display(Name = "На какое топливо действует прайс")]
         public int FuelId { get; set; }
-        public FuelModel Fuel { get; set; }
+        public Fuel Fuel { get; set; }
         [Display(Name = "Цена")]
         public float Price { get; set; }
         [Display(Name = "Статус")]

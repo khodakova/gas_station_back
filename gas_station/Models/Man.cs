@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace gas_station.Models
 {
-    public class ManModel : ParentModel
+    public class Man : Parent
     {
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
@@ -20,10 +20,6 @@ namespace gas_station.Models
         [Display(Name = "Статус")]
         public bool Status { get; set; }
         
-        public UserModel User { get; set; }
-        public EmployeeModel Employee { get; set; }
-        public OrderModel Order { get; set; }
-
         public override DateTime CreateDate { get => base.CreateDate; set => base.CreateDate = value; }
         public override DateTime UpdateDate { get => base.UpdateDate; set => base.UpdateDate = value; }
 

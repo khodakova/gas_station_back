@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace gas_station.Models
 {
-    public class UserModel : ParentModel
+    public class User : Man
     {
         [Display(Name = "Логин")]
         public string Login { get; set; }
@@ -14,8 +14,6 @@ namespace gas_station.Models
         public string Password { get; set; }
         [Display(Name = "E-mail")]
         public string Email { get; set; }
-        public int ManId { get; set; }
-        public ManModel Man { get; set; }
         public override DateTime CreateDate { get => base.CreateDate; set => base.CreateDate = value; }
         public override DateTime UpdateDate { get => base.UpdateDate; set => base.UpdateDate = value; }
     }

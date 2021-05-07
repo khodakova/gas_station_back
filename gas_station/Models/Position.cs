@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace gas_station.Models
 {
-    public class PositionModel : ParentModel
+    public class Position : Parent
     {
         [Display(Name = "Название")]
-        public override string Name { get => base.Name; set => base.Name = value; }
-        public EmployeeModel Employee { get; set; }
+        public string Name { get; set; }
+        public Employee Employee { get; set; }
         public override DateTime CreateDate { get => base.CreateDate; set => base.CreateDate = value; }
         public override DateTime UpdateDate { get => base.UpdateDate; set => base.UpdateDate = value; }
     }

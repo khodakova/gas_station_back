@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace gas_station.Models
 {
-    public class ParentModel
+    public class Parent
     {
         [Key]
         public virtual int Id { get; set; }
-        public virtual string Name { get; set; }
         public virtual DateTime CreateDate { get; set; }
         public virtual DateTime UpdateDate { get; set; }
 

@@ -33,14 +33,13 @@ namespace gas_station.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditEmployee(EmployeeModel EmployeeModel)
+        public IActionResult EditEmployee(Employee EmployeeModel)
         {
             var fromDB = _DBContext.Employees.Find(EmployeeModel.Id);
             fromDB.LastName = EmployeeModel.LastName;
             fromDB.FirstName = EmployeeModel.FirstName;
             fromDB.MiddleName = EmployeeModel.MiddleName;
             fromDB.Code = EmployeeModel.Code;
-            fromDB.Position = EmployeeModel.Position;
             _DBContext.SaveChanges();
 
             return View();

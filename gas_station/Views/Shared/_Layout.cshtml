@@ -32,6 +32,9 @@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
+            <div id="app">
+                {{ message }}
+            </div>
         </main>
     </div>
 
@@ -40,6 +43,19 @@
             &copy; 2021 - gas_station - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        const App = {
+            data() {
+                return {
+                    message: 'atata'
+                }
+            }
+        }
+
+        Vue.createApp(App).mount('#app')
+    </script>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace gas_station.Models
 {
-    public class FuelTypeModel : ParentModel
+    public class FuelType : Parent
     {
         [Display(Name = "Название типа топлива")]
-        public override string Name { get => base.Name; set => base.Name = value; }
+        public string Name { get; set; }
     }
 }
