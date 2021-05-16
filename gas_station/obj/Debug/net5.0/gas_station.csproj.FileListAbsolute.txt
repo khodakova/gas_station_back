@@ -151,3 +151,11 @@ C:\Users\khoda\source\repos\gas_station\gas_station\bin\Debug\net5.0\Swashbuckle
 C:\Users\khoda\source\repos\gas_station\gas_station\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\khoda\source\repos\gas_station\gas_station\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\khoda\source\repos\gas_station\gas_station\obj\Debug\net5.0\gas_station.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\khoda\source\repos\gas_station\gas_station\obj\Debug\net5.0\Razor\Views\Employees\Create.cshtml.g.cs
+C:\Users\khoda\source\repos\gas_station\gas_station\obj\Debug\net5.0\Razor\Views\Employees\Delete.cshtml.g.cs
+C:\Users\khoda\source\repos\gas_station\gas_station\obj\Debug\net5.0\Razor\Views\Employees\Details.cshtml.g.cs
+C:\Users\khoda\source\repos\gas_station\gas_station\obj\Debug\net5.0\Razor\Views\Employees\Edit.cshtml.g.cs
+C:\Users\khoda\source\repos\gas_station\gas_station\obj\Debug\net5.0\Razor\Views\Employees\Index.cshtml.g.cs
+C:\Users\khoda\source\repos\gas_station\gas_station\bin\Debug\net5.0\System.Net.Http.Formatting.dll
+C:\Users\khoda\source\repos\gas_station\gas_station\bin\Debug\net5.0\System.Web.Http.dll
+C:\Users\khoda\source\repos\gas_station\gas_station\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll

@@ -10,5 +10,7 @@ namespace gas_station.Models
     {
         [Display(Name = "Название типа топлива")]
         public string Name { get; set; }
+        public List<Fuel> Fuels { get; set; } = new List<Fuel>();
+        public List<FillingColumn> FillingColumns { get; set; } = new List<FillingColumn>();
     }
 }

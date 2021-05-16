@@ -9,7 +9,8 @@ namespace gas_station.Models
     public class DeliveryItem : Parent
     {
         [Display(Name = "Название единицы поставки")]
-        public string Name { get; set; }
+        public int FuelId { get; set; }
+        public Fuel Fuel { get; set; }
 
         [Display(Name = "Id поставки")]
         public int DeliveryId { get; set; }
@@ -22,10 +23,7 @@ namespace gas_station.Models
         public float Price { get; set; }
 
         [Display(Name = "Сумма")]
-        public float Summ { get; set; }
-
-        public int FuelId { get; set; }
-        public Fuel Fuel { get; set; }
+        public float Sum { get; set; }
         
     }
 }

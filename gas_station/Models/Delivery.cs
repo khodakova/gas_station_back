@@ -13,17 +13,20 @@ namespace gas_station.Models
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
         
-        [Display(Name = "Статус поставки (0 - зарегистрирована, 1 - взята в работу, 2 - завершена)")]
+        [Display(Name = "Статус поставки (false - зарегистрирована, true - завершена)")]
         public bool Status { get; set; }
 
         [Display(Name = "Стоимость")]
-        public int Summ { get; set; }
+        public int Sum { get; set; }
 
         [Display(Name = "Принял поставку")]
-        public int EndBy { get; set; }
+        public int ? EndBy { get; set; }
 
         [Display(Name = "Дата завершения")]
-        public DateTime EndDate { get; set; }
+        public DateTime ? EndDate { get; set; }
+        // на какую станцию будет поставка
+        public int StationId { get; set; }
+        public Station Station { get; set; }
 
         public List<DeliveryItem> DeliveryItems { get; set; } = new List<DeliveryItem>();
 

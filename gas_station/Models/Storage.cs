@@ -14,5 +14,8 @@ namespace gas_station.Models
         public float Value { get; set; }
         [Display(Name = "Статус")]
         public bool Status { get; set; }
+        // на каждой станции определенный резерв каждого вида топлива
+        public int StationId { get; set; }
+        public Station Station { get; set; }
     }
 }

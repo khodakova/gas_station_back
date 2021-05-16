@@ -22,6 +22,7 @@ namespace gas_station
         }
 
         public IConfiguration Configuration { get; }
+        readonly string CorsPolicy = "AllowOrigin";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -32,6 +33,10 @@ namespace gas_station
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             // подключение swagger
             services.AddSwaggerGen();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsPolicy, options => options.AllowAnyOrigin());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +54,7 @@ namespace gas_station
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseRouting();
 

@@ -13,6 +13,7 @@ namespace gas_station.Models
         public DbSet<Delivery> Deliveries { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Fuel> Fuels { get; set; }
+        public DbSet<FillingColumn> FillingColumns { get; set; }
         public DbSet<FuelType> FuelTypes { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Position> Positions { get; set; }
@@ -22,7 +23,7 @@ namespace gas_station.Models
 
         public DBContext(DbContextOptions<DBContext> dbContextOptions) : base(dbContextOptions)
         {
-            Database.EnsureDeleted();
+ //           Database.EnsureDeleted();
             Database.EnsureCreated();
             if (!Stations.Any())
             {
@@ -57,6 +58,140 @@ namespace gas_station.Models
                     Name = "Сотрудник",
                     CreateDate = DateTime.Now,
                     UpdateDate = DateTime.Now
+                });
+                SaveChanges();
+            };
+            if (!FillingColumns.Any())
+            {
+                FillingColumns.Add(new FillingColumn
+                {
+                    Code = "1",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    StationId = 1
+                });
+                FillingColumns.Add(new FillingColumn
+                {
+                    Code = "2",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    StationId = 1
+                });
+                FillingColumns.Add(new FillingColumn
+                {
+                    Code = "3",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    StationId = 1
+                });
+                FillingColumns.Add(new FillingColumn
+                {
+                    Code = "1",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    StationId = 2
+                });
+                FillingColumns.Add(new FillingColumn
+                {
+                    Code = "2",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    StationId = 2
+                });
+                FillingColumns.Add(new FillingColumn
+                {
+                    Code = "3",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    StationId = 2
+                });
+                SaveChanges();
+            };
+            if (!FuelTypes.Any())
+            {
+                FuelTypes.Add(new FuelType
+                {
+                    Name = "Бензин",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now
+                });
+                FuelTypes.Add(new FuelType
+                {
+                    Name = "Дизель",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now
+                });
+                FuelTypes.Add(new FuelType
+                {
+                    Name = "Четкий вид топлива",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now
+                });
+                FuelTypes.Add(new FuelType
+                {
+                    Name = "Топливная нефть",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now
+                });
+                SaveChanges();
+            };
+            if (!Fuels.Any())
+            {
+                Fuels.Add(new Fuel
+                {
+                    Name = "80",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    FuelTypeId = 1
+                });
+                Fuels.Add(new Fuel
+                {
+                    Name = "92",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    FuelTypeId = 1
+                });
+                Fuels.Add(new Fuel
+                {
+                    Name = "95",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    FuelTypeId = 1
+                });
+                Fuels.Add(new Fuel
+                {
+                    Name = "98",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    FuelTypeId = 1
+                });
+                Fuels.Add(new Fuel
+                {
+                    Name = "ДТ",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    FuelTypeId = 2
+                });
+                Fuels.Add(new Fuel
+                {
+                    Name = "Пропан",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    FuelTypeId = 4
+                });
+                Fuels.Add(new Fuel
+                {
+                    Name = "Метан",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    FuelTypeId = 4
+                });
+                Fuels.Add(new Fuel
+                {
+                    Name = "Какое-то топливо",
+                    CreateDate = DateTime.Now,
+                    UpdateDate = DateTime.Now,
+                    FuelTypeId = 3
                 });
                 SaveChanges();
             };
