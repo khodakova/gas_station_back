@@ -15,6 +15,7 @@ namespace gas_station.Controllers
     {
         private readonly DBContext _context;
 
+
         public DeliveriesController(DBContext context)
         {
             _context = context;
@@ -44,30 +45,43 @@ namespace gas_station.Controllers
         // PUT: api/Deliveries/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDelivery(int id, Delivery delivery)
+        public async Task<IActionResult> PutDelivery(int id, int emp)
         {
-            if (id != delivery.Id)
+            
+
+            using (_context)
             {
-                return BadRequest();
+                Npgsql.NpgsqlConnection conn = new("Server=127.0.0.1;Port=5432;Database=gas_station;User Id=postgres;Password=123;");
+                conn.Open();
+                    //var ps = new Npgsql.NpgsqlParameter();
+                    var cmd = new Npgsql.NpgsqlCommand(@"CALL public.take_delivery(@p_id, 2)", conn);
+                cmd.Parameters.Add(new Npgsql.NpgsqlParameter("p_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = id });
+                cmd.ExecuteNonQuery();
             }
 
-            _context.Entry(delivery).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DeliveryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            ////if (id != delivery.Id)
+            ////{
+            ////    return BadRequest();
+            ////}
+
+            ////_context.Entry(delivery).State = EntityState.Modified;
+
+            ////try
+            ////{
+            ////    await _context.SaveChangesAsync();
+            ////}
+            ////catch (DbUpdateConcurrencyException)
+            ////{
+            ////    if (!DeliveryExists(id))
+            ////    {
+            ////        return NotFound();
+            ////    }
+            ////    else
+            ////    {
+            ////        throw;
+            ////    }
+            ////}
 
             return NoContent();
         }

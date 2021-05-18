@@ -21,6 +21,11 @@ namespace gas_station.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Storage> Storage { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(@"Server=127.0.0.1;Port=5432;Database=gas_station;User Id=postgres;Password=123;");
+        }
+
         public DBContext(DbContextOptions<DBContext> dbContextOptions) : base(dbContextOptions)
         {
  //           Database.EnsureDeleted();
