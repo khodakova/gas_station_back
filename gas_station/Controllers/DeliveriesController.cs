@@ -42,52 +42,25 @@ namespace gas_station.Controllers
             return delivery;
         }
 
+        // принятие заявки, на вход берем id заявки и id принявшего сотрудника
         // PUT: api/Deliveries/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDelivery(int id, int emp)
         {
-            
 
-            using (_context)
-            {
+            //using (_context)
+            //{
                 Npgsql.NpgsqlConnection conn = new("Server=127.0.0.1;Port=5432;Database=gas_station;User Id=postgres;Password=123;");
                 conn.Open();
-                    //var ps = new Npgsql.NpgsqlParameter();
-                    var cmd = new Npgsql.NpgsqlCommand(@"CALL public.take_delivery(@p_id, 2)", conn);
+                var cmd = new Npgsql.NpgsqlCommand(@"CALL public.take_delivery(@p_id, 2)", conn);
                 cmd.Parameters.Add(new Npgsql.NpgsqlParameter("p_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = id });
                 cmd.ExecuteNonQuery();
-            }
-
-
-            ////if (id != delivery.Id)
-            ////{
-            ////    return BadRequest();
-            ////}
-
-            ////_context.Entry(delivery).State = EntityState.Modified;
-
-            ////try
-            ////{
-            ////    await _context.SaveChangesAsync();
-            ////}
-            ////catch (DbUpdateConcurrencyException)
-            ////{
-            ////    if (!DeliveryExists(id))
-            ////    {
-            ////        return NotFound();
-            ////    }
-            ////    else
-            ////    {
-            ////        throw;
-            ////    }
-            ////}
+            //}
 
             return NoContent();
         }
 
         // POST: api/Deliveries
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Delivery>> PostDelivery(Delivery delivery)
         {

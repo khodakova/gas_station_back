@@ -14,6 +14,30 @@ namespace gas_station.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly DBContext _DBContext;
 
+
+        public IEnumerable<Dictionary<string, object>> Serialize(Npgsql.NpgsqlDataReader reader)
+        {
+            var results = new List<Dictionary<string, object>>();
+            var cols = new List<string>();
+            for (var i = 0; i < reader.FieldCount; i++)
+                cols.Add(reader.GetName(i));
+
+            while (reader.Read())
+                results.Add(SerializeRow(cols, reader));
+
+            return results;
+        }
+
+        private Dictionary<string, object> SerializeRow(IEnumerable<string> cols,
+                                                Npgsql.NpgsqlDataReader reader)
+        {
+            var result = new Dictionary<string, object>();
+            foreach (var col in cols)
+                result.Add(col, reader[col]);
+            return result;
+        }
+
+
         public HomeController(ILogger<HomeController> logger, DBContext DBContext)
         {
             _logger = logger;

@@ -9,9 +9,9 @@ namespace gas_station.Models
     public class PriceList : Parent
     {
         [Display(Name = "Дата начала действия цены")]
-        public DateTime BeginDate { get; set; }
+        public virtual DateTime BeginDate { get; set; }
         [Display(Name = "Дата окончания действия цены")]
-        public DateTime EndDate { get; set; }
+        public DateTime ? EndDate { get; set; }
         [Display(Name = "На какое топливо действует прайс")]
         public int FuelId { get; set; }
         public Fuel Fuel { get; set; }
@@ -20,6 +20,6 @@ namespace gas_station.Models
         [Display(Name = "Статус")]
         public bool Status { get; set; }
         [Display(Name = "Комментарий")]
-        public string Note { get; set; }
+        public string ? Note { get; set; }
     }
 }

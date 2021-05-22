@@ -21,6 +21,8 @@ namespace gas_station
             Configuration = configuration;
         }
 
+       
+
         public IConfiguration Configuration { get; }
         readonly string CorsPolicy = "AllowOrigin";
 
