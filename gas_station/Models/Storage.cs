@@ -9,7 +9,9 @@ namespace gas_station.Models
     public class Storage : Parent
     {
         [Display(Name = "Единица топлива")]
-        public List<Fuel> Fuels { get; set; } = new List<Fuel>();
+        public int FuelId { get; set; }
+        public Fuel Fuel { get; set; }
+        //public List<Fuel> Fuels { get; set; } = new List<Fuel>();
         [Display(Name = "Имеющийся объем")]
         public float Value { get; set; }
         [Display(Name = "Статус")]

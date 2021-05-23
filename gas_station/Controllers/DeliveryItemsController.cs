@@ -36,7 +36,7 @@ namespace gas_station.Controllers
             public string FuelName { get; set; }
         }
 
-        // GET: api/DeliveryItems/5
+        // получение всех единиц выбранной заявки
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Object>>> GetDeliveryItem(int id)
         {
@@ -74,7 +74,6 @@ namespace gas_station.Controllers
                     // заполняем список возвращаемых с сервера данных, идем по каждой записи курсора
                     while (dr.Read())
                     {
-                        Console.WriteLine(dr[0]);
                         delivery_item obj = new delivery_item();
                         obj.Id = Convert.ToInt32(dr.GetValue(0));
                         obj.FuelId = Convert.ToInt32(dr.GetValue(1));
@@ -84,7 +83,6 @@ namespace gas_station.Controllers
                         obj.Price = (float)dr.GetValue(5);
                         obj.Sum = (float)dr.GetValue(6);
                         data.Add(obj);
-                        Console.WriteLine(dr.GetValue(0));
                     }
                     dr.Close();
 
@@ -137,22 +135,6 @@ namespace gas_station.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDeliveryItem", new { id = deliveryItem.Id }, deliveryItem);
-        }
-
-        // DELETE: api/DeliveryItems/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDeliveryItem(int id)
-        {
-            var deliveryItem = await _context.DeliveryItems.FindAsync(id);
-            if (deliveryItem == null)
-            {
-                return NotFound();
-            }
-
-            _context.DeliveryItems.Remove(deliveryItem);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool DeliveryItemExists(int id)

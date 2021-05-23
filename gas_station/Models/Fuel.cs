@@ -19,6 +19,7 @@ namespace gas_station.Models
         //       [Display(Name = "Id записи в прайсе")]
         //       public int PriceListId { get; set; }
         public PriceList PriceList { get; set; }
-        public List<Storage> Storages { get; set; } = new List<Storage>();
+        public Storage Storage { get; set; }
+        //       public List<Storage> Storages { get; set; } = new List<Storage>();
     }
 }
