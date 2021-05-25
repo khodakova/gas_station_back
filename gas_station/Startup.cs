@@ -1,11 +1,14 @@
 using gas_station.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,8 +36,35 @@ namespace gas_station
             // настраиваем связку БД и приложения
             services.AddDbContext<DBContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-            // подключение swagger
-            services.AddSwaggerGen();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    // указывает, будет ли валидироваться издатель для валидации токена
+                    ValidateIssuer = true,
+                    // строка, представляющая издателя
+                    ValidIssuer = AuthOptions.ISSUER,
+
+                    // будет ли валидироваться потребитель токена
+                    ValidateAudience = true,
+                    // установка потребителя токена
+                    ValidAudience = AuthOptions.AUDIENCE,
+                    // будет ли валидироваться время существования
+                    ValidateLifetime = true,
+
+                    // установка ключа безопасности
+                    IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                    // валидация ключа безопасности
+                    ValidateIssuerSigningKey = true,
+                };
+            });
+
+
+            services.AddIdentity<User, IdentityRole<int>>()
+                .AddEntityFrameworkStores<DBContext>();
             services.AddCors(options =>
             {
                 options.AddPolicy(CorsPolicy, options => options.AllowAnyOrigin());
@@ -69,6 +99,7 @@ namespace gas_station
             });
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

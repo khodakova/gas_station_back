@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace gas_station.Models
 {
-    public class DBContext : DbContext
+    public class DBContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
         public DbSet<Station> Stations { get; set; }
         public DbSet<DeliveryItem> DeliveryItems { get; set; }
