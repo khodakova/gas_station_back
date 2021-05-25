@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace gas_station.Controllers
 {
-    [System.Web.Http.Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
