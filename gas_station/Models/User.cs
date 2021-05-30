@@ -12,8 +12,11 @@ namespace gas_station.Models
     {
         [Display(Name = "Пароль")]
         public virtual string Password { get; set; }
-        public List<Order> Orders { get; set; } = new List<Order>();
+ //       public List<Order> Orders { get; set; } = new List<Order>();
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
+        public int IdentityRoleId { get; set; }
+        public IdentityRole<int> IdentityRole { get; set; }
+        public Employee Employee { get; set; }
     }
 }

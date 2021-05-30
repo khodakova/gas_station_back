@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static gas_station.Startup;
 
 namespace gas_station.Models
 {
@@ -23,15 +24,56 @@ namespace gas_station.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Storage> Storage { get; set; }
 
+        public DbSet<IdentityRole> IdentityRoles { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(@"Server=127.0.0.1;Port=5432;Database=gas_station;User Id=postgres;Password=123;");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            //      base.OnModelCreating(builder);
+
+            modelBuilder.Entity<User>().ToTable("Users");
+  //          modelBuilder.Entity<Role>().ToTable("Roles");
+        }
+
         public DBContext(DbContextOptions<DBContext> dbContextOptions) : base(dbContextOptions)
         {
- //           Database.EnsureDeleted();
+            
             Database.EnsureCreated();
+            //if (! Roles.Any())
+            //{
+            //    Roles.Add(new Role
+            //    {
+            //        Name = "Admin",
+            //        NormalizedName = "ADMIN"
+            //    });
+            //    Roles.Add(new Role
+            //    {
+            //        Name = "Employee",
+            //        NormalizedName = "EMPLOYEE"
+            //    });
+            //    Roles.Add(new Role
+            //    {
+            //        Name = "Client",
+            //        NormalizedName = "CLIENT"
+            //    });
+            //    SaveChanges();
+            //};
+            //if (!Users.Any())
+            //{
+            //    var adminModel = new User
+            //    {
+            //        UserName = "admin",
+            //        Password = "123123",
+            //        Email = "admin@admin.admin",
+            //        RoleId = 1
+            //    };
+            //    _userManager.CreateAsync(adminModel, adminModel.Password);
+            //};
             if (!Stations.Any())
             {
                 Stations.Add(new Station

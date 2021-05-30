@@ -15,6 +15,8 @@ namespace gas_station.Models
         // должность
         public int PositionId { get; set; }
         public Position Position { get; set; }
+        public int ? UserId { get; set; }
+        public User User { get; set; }
         public override DateTime CreateDate { get => base.CreateDate; set => base.CreateDate = value; }
         public override DateTime UpdateDate { get => base.UpdateDate; set => base.UpdateDate = value; }
 

@@ -22,17 +22,20 @@ namespace gas_station.Controllers
         // менеджер для аутентификации
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        public AccountController(DBContext context, UserManager<User> userManager, SignInManager<User> signInManager)
+        private RoleManager<IdentityRole<int>> _roleManager;
+        public AccountController(DBContext context, UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager, SignInManager<User> signInManager)
         {
             _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
+            _roleManager = roleManager;
 
         }
-        [HttpPost]
+        [HttpPost("/registration")]
         public async Task<IActionResult> Register(UserInput model)
         {
-            User user = new User() { Email = model.Email, UserName = model.UserName };
+            // по умолчанию все пользователи создаются с ролью Клиент
+            User user = new User() { Email = model.Email, UserName = model.UserName, Password = model.Password, IdentityRoleId = 3 };
             // добавляем пользователя
             var result = await _userManager.CreateAsync(user, model.Password);
  
@@ -40,9 +43,9 @@ namespace gas_station.Controllers
         }
 
         [HttpPost("/token")]
-        public async Task<IActionResult> Token(string username, string password)
+        public async Task<IActionResult> Token(UserInput user)
         {
-            var identity = await GetIdentity(username, password);
+            var identity = await GetIdentity(user.UserName, user.Password);
             if (identity == null)
             {
                 return BadRequest(new { errorText = "Invalid username or password." });
@@ -56,19 +59,24 @@ namespace gas_station.Controllers
             claims: identity.Claims,
             expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
             signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+            var userRole = await _roleManager.FindByIdAsync(identity.Claims.ToArray()[1].Value);
+
             var response = new
             {
                 access_token = encodedJwt,
-                username = identity.Name
+                username = identity.Name,
+                role = userRole.Name
             };
             return new JsonResult(response);
         }
 
+        [HttpPost]
         // идентификация пользователя
         private async Task<ClaimsIdentity> GetIdentity(string username, string password)
         {
-            User user = _context.Users.FirstOrDefault(i => i.UserName == username && i.PasswordHash == password);
+            User user = _context.Users.FirstOrDefault(i => i.UserName == username && i.Password == password);
 
             var result = await _userManager.CheckPasswordAsync(user, password);
             if (user != null && result)
@@ -76,7 +84,7 @@ namespace gas_station.Controllers
                 var claims = new List<Claim>
                 {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.IdentityRoleId.ToString())
                 };
                 ClaimsIdentity claimsIdentity =
                 new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
@@ -87,18 +95,18 @@ namespace gas_station.Controllers
             return null;
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         [Route("getlogin")]
-        [HttpGet]
         public IActionResult GetLogin()
         {
             return Ok($"Ваш логин: {User.Identity.Name}");
         }
-        [System.Web.Http.Route("getlogin2")]
-        [HttpGet]
-        public IActionResult GetLogin2()
+
+        [Authorize(Roles = "admin")]
+        [Route("getrole")]
+        public IActionResult GetRole()
         {
-            return Ok($"Ваш логин: {User.Identity.Name}");
+            return Ok("Ваша роль: администратор");
         }
     }
 }

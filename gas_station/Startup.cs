@@ -25,7 +25,8 @@ namespace gas_station
             Configuration = configuration;
         }
 
-       
+
+
 
         public IConfiguration Configuration { get; }
         readonly string CorsPolicy = "AllowOrigin";
@@ -37,6 +38,7 @@ namespace gas_station
             // настраиваем связку БД и приложения
             services.AddDbContext<DBContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -142,6 +144,7 @@ namespace gas_station
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }
