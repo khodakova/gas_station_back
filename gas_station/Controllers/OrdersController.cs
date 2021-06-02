@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using gas_station.Models;
+using Npgsql;
+using System.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace gas_station.Controllers
 {
@@ -14,10 +17,12 @@ namespace gas_station.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly DBContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public OrdersController(DBContext context)
+        public OrdersController(DBContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/Orders
@@ -72,15 +77,39 @@ namespace gas_station.Controllers
             return NoContent();
         }
 
+
+        public class order : Order
+        {
+            public string UserName { get; set; }
+            public string StationId { get; set; }
+
+        }
+
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder(order model)
         {
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
+            var user = await _userManager.FindByNameAsync(model.UserName);
+            // прописываем соединение с базой
+            NpgsqlConnection conn = new("Server=127.0.0.1;Port=5432;Database=gas_station;User Id=postgres;Password=123;");
+            conn.Open();
 
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+            //создаем новую команду для получения данных из базы (прописываем параметры и синтаксис)
+            NpgsqlCommand command = new NpgsqlCommand("call public.create_order(@p_user_id, @p_fuel_id, @p_value, @p_price, @p_station_id)", conn);
+            command.CommandType = CommandType.Text;
+            // создаем именованные параметры (названия как в базе), прописываем их типы
+            command.Parameters.Add(new Npgsql.NpgsqlParameter("p_user_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = user.Id });
+            command.Parameters.Add(new Npgsql.NpgsqlParameter("p_fuel_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = model.FuelId });
+            command.Parameters.Add(new Npgsql.NpgsqlParameter("p_value", NpgsqlTypes.NpgsqlDbType.Real) { Value = model.Value });
+            command.Parameters.Add(new Npgsql.NpgsqlParameter("p_price", NpgsqlTypes.NpgsqlDbType.Real) { Value = model.Price });
+            command.Parameters.Add(new Npgsql.NpgsqlParameter("p_station_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = model.StationId });
+            // выполняем созданную команду и получаем курсор с данными
+            command.ExecuteNonQuery();
+
+            conn.Close();
+
+            return NoContent();
         }
 
         // DELETE: api/Orders/5

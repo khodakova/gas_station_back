@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -34,11 +36,33 @@ namespace gas_station.Controllers
         [HttpPost("/registration")]
         public async Task<IActionResult> Register(UserInput model)
         {
-            // по умолчанию все пользователи создаются с ролью Клиент
-            User user = new User() { Email = model.Email, UserName = model.UserName, Password = model.Password, IdentityRoleId = 3 };
+
+            User user = new User() { Email = model.Email, UserName = model.UserName, Password = model.Password, IdentityRoleId = model.RoleId };
             // добавляем пользователя
             var result = await _userManager.CreateAsync(user, model.Password);
- 
+            var newUser = await _userManager.FindByNameAsync(model.UserName);
+            // если добавляем сотрудника или администратора, привязываем сотрудника к пользователю
+            if (model.RoleId == 1 || model.RoleId == 2)
+            {
+                var employee = await _context.Employees.FindAsync(model.EmployeeId);
+                using (_context)
+                {
+                    // прописываем соединение с базой
+                    NpgsqlConnection conn = new("Server=127.0.0.1;Port=5432;Database=gas_station;User Id=postgres;Password=123;");
+                    conn.Open();
+                    //создаем новую команду для получения данных из базы (прописываем параметры и синтаксис)
+                    NpgsqlCommand command = new NpgsqlCommand("call public.add_user_to_employee(@user_id, @employee_id)", conn);
+                    command.CommandType = CommandType.Text;
+                    // создаем именованные параметры (названия как в базе), прописываем их типы
+                    command.Parameters.Add(new Npgsql.NpgsqlParameter("user_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = newUser.Id });
+                    command.Parameters.Add(new Npgsql.NpgsqlParameter("employee_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = employee.Id });
+                    // выполняем созданную команду и получаем курсор с данными
+                    command.ExecuteNonQuery();
+
+                    conn.Close();
+                }
+            }
+
             return new JsonResult(result);
         }
 
@@ -83,7 +107,7 @@ namespace gas_station.Controllers
             {
                 var claims = new List<Claim>
                 {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.IdentityRoleId.ToString())
                 };
                 ClaimsIdentity claimsIdentity =
