@@ -22,12 +22,6 @@ namespace gas_station.Controllers
             _context = context;
         }
 
-        // GET: api/PriceLists
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<PriceList>>> GetPriceLists()
-        //{
-        //    return await _context.PriceLists.ToListAsync();
-        //}
 
         // создаем объект на основе DeliveryItem для передачи клиенту
         public class pricelist : PriceList
@@ -124,11 +118,12 @@ namespace gas_station.Controllers
             conn.Open();
 
             //создаем новую команду для получения данных из базы (прописываем параметры и синтаксис)
-            NpgsqlCommand command = new NpgsqlCommand("call public.create_pricelist_item(@p_fuel_id, @p_begin_date, @p_price, @p_note)", conn);
+            NpgsqlCommand command = new NpgsqlCommand("call public.create_pricelist_item(@p_fuel_id, @p_begin_date, @p_end_date, @p_price, @p_note)", conn);
             command.CommandType = CommandType.Text;
             // создаем именованные параметры (названия как в базе), прописываем их типы
             command.Parameters.Add(new NpgsqlParameter("@p_fuel_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = item.FuelId });
             command.Parameters.Add(new NpgsqlParameter("@p_begin_date", NpgsqlTypes.NpgsqlDbType.Date) { Value = item.BeginDate });
+            command.Parameters.Add(new NpgsqlParameter("@p_end_date", NpgsqlTypes.NpgsqlDbType.Date) { Value = item.EndDate });
             command.Parameters.Add(new NpgsqlParameter("@p_price", NpgsqlTypes.NpgsqlDbType.Real) { Value = item.Price });
             command.Parameters.Add(new NpgsqlParameter("@p_note", NpgsqlTypes.NpgsqlDbType.Varchar) { Value = "note" });
             // выполняем созданную команду и получаем курсор с данными

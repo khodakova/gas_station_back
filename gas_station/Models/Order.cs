@@ -22,5 +22,7 @@ namespace gas_station.Models
         public float Price { get; set; }
         [Display(Name = "Сумма")]
         public float Sum { get; set; }
+        public int StationId { get; set; }
+        public Station Station { get; set; }
     }
 }

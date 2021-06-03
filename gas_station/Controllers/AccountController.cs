@@ -39,31 +39,39 @@ namespace gas_station.Controllers
 
             User user = new User() { Email = model.Email, UserName = model.UserName, Password = model.Password, IdentityRoleId = model.RoleId };
             // добавляем пользователя
+ 
             var result = await _userManager.CreateAsync(user, model.Password);
-            var newUser = await _userManager.FindByNameAsync(model.UserName);
-            // если добавляем сотрудника или администратора, привязываем сотрудника к пользователю
-            if (model.RoleId == 1 || model.RoleId == 2)
+            if (result.Succeeded)
             {
-                var employee = await _context.Employees.FindAsync(model.EmployeeId);
-                using (_context)
+                var newUser = await _userManager.FindByNameAsync(model.UserName);
+                // если добавляем сотрудника или администратора, привязываем сотрудника к пользователю
+                if (model.RoleId == 1 || model.RoleId == 2)
                 {
-                    // прописываем соединение с базой
-                    NpgsqlConnection conn = new("Server=127.0.0.1;Port=5432;Database=gas_station;User Id=postgres;Password=123;");
-                    conn.Open();
-                    //создаем новую команду для получения данных из базы (прописываем параметры и синтаксис)
-                    NpgsqlCommand command = new NpgsqlCommand("call public.add_user_to_employee(@user_id, @employee_id)", conn);
-                    command.CommandType = CommandType.Text;
-                    // создаем именованные параметры (названия как в базе), прописываем их типы
-                    command.Parameters.Add(new Npgsql.NpgsqlParameter("user_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = newUser.Id });
-                    command.Parameters.Add(new Npgsql.NpgsqlParameter("employee_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = employee.Id });
-                    // выполняем созданную команду и получаем курсор с данными
-                    command.ExecuteNonQuery();
+                    var employee = await _context.Employees.FindAsync(model.EmployeeId);
+                    using (_context)
+                    {
+                        // прописываем соединение с базой
+                        NpgsqlConnection conn = new("Server=127.0.0.1;Port=5432;Database=gas_station;User Id=postgres;Password=123;");
+                        conn.Open();
+                        //создаем новую команду для получения данных из базы (прописываем параметры и синтаксис)
+                        NpgsqlCommand command = new NpgsqlCommand("call public.add_user_to_employee(@user_id, @employee_id)", conn);
+                        command.CommandType = CommandType.Text;
+                        // создаем именованные параметры (названия как в базе), прописываем их типы
+                        command.Parameters.Add(new Npgsql.NpgsqlParameter("user_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = newUser.Id });
+                        command.Parameters.Add(new Npgsql.NpgsqlParameter("employee_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = employee.Id });
+                        // выполняем созданную команду и получаем курсор с данными
+                        command.ExecuteNonQuery();
 
-                    conn.Close();
-                }
+                        conn.Close();
+                    }
+                };
+                return new JsonResult(result);
             }
-
-            return new JsonResult(result);
+            // если не проходит валидация пользователя, показываем ошибки
+            else
+            {
+                return new JsonResult(result.Errors);
+            }            
         }
 
         [HttpPost("/token")]

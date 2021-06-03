@@ -25,9 +25,6 @@ namespace gas_station
             Configuration = configuration;
         }
 
-
-
-
         public IConfiguration Configuration { get; }
         readonly string CorsPolicy = "AllowOrigin";
 
@@ -100,8 +97,15 @@ namespace gas_station
             });
 
 
-            services.AddIdentity<User, IdentityRole<int>>()
+            services.AddIdentity<User, IdentityRole<int>>(opts => {
+                opts.Password.RequiredLength = 6;   // минимальная длина
+                opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
+                opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
+                opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
+                opts.Password.RequireDigit = false; // требуются ли цифры
+                opts.User.AllowedUserNameCharacters = "1234567890_@qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";            })
                 .AddEntityFrameworkStores<DBContext>();
+            //services.AddTransient<IUserValidator<User>, CustomUserValidator>();
             services.AddCors(options =>
             {
                 options.AddPolicy(CorsPolicy, options => options.AllowAnyOrigin());

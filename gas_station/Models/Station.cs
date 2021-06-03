@@ -24,5 +24,6 @@ namespace gas_station.Models
         public List<Employee> Employees { get; set; } = new List<Employee>();
         public List<FillingColumn> FillingColumns { get; set; } = new List<FillingColumn>();
         public List<Storage> Storages { get; set; } = new List<Storage>();
+        public List<Order> Orders { get; set; } = new List<Order>();
     }
 }
