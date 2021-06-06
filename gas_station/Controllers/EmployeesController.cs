@@ -143,8 +143,7 @@ namespace gas_station.Controllers
             return NoContent();
         }
 
-        // POST: api/Employees
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // создание нового сотрудника (без привязки в станции)
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
