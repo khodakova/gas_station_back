@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\khoda\\source\\repos\\gas_station\\gas_station\\gas_station.csproj": {}
+    "D:\\Лена\\Универ\\8 sem\\gas_station_back\\gas_station\\gas_station.csproj": {}
   },
   "projects": {
-    "C:\\Users\\khoda\\source\\repos\\gas_station\\gas_station\\gas_station.csproj": {
+    "D:\\Лена\\Универ\\8 sem\\gas_station_back\\gas_station\\gas_station.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\khoda\\source\\repos\\gas_station\\gas_station\\gas_station.csproj",
+        "projectUniqueName": "D:\\Лена\\Универ\\8 sem\\gas_station_back\\gas_station\\gas_station.csproj",
         "projectName": "gas_station",
-        "projectPath": "C:\\Users\\khoda\\source\\repos\\gas_station\\gas_station\\gas_station.csproj",
-        "packagesPath": "C:\\Users\\khoda\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\khoda\\source\\repos\\gas_station\\gas_station\\obj\\",
+        "projectPath": "D:\\Лена\\Универ\\8 sem\\gas_station_back\\gas_station\\gas_station.csproj",
+        "packagesPath": "C:\\Users\\Helen\\.nuget\\packages\\",
+        "outputPath": "D:\\Лена\\Универ\\8 sem\\gas_station_back\\gas_station\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\khoda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Helen\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -142,7 +139,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

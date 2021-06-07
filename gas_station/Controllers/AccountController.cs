@@ -127,6 +127,7 @@ namespace gas_station.Controllers
             return null;
         }
 
+        [HttpGet]
         [Authorize]
         [Route("getlogin")]
         public IActionResult GetLogin()
@@ -134,6 +135,7 @@ namespace gas_station.Controllers
             return Ok($"Ваш логин: {User.Identity.Name}");
         }
 
+        [HttpGet]
         [Authorize(Roles = "admin")]
         [Route("getrole")]
         public IActionResult GetRole()
