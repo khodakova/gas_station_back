@@ -145,12 +145,29 @@ namespace gas_station.Controllers
 
         // создание нового сотрудника (без привязки в станции)
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public async Task<ActionResult<Employee>> PostEmployee(employee employee)
         {
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
+            //_context.Employees.Add(employee);
+            //await _context.SaveChangesAsync();
+            Employee emp = new Employee
+            {
+                LastName = employee.LastName,
+                FirstName = employee.FirstName,
+                MiddleName = employee.MiddleName,
+                PositionId = employee.PositionId,
+                Birthdate = employee.Birthdate,
+                Status = employee.Status,
+                Code = employee.Code,
+                CreateDate = new DateTime(),
+                UpdateDate = new DateTime()
+            };
+            _context.Employees.Add(emp);
+            foreach (Station station in employee.Stations) {
+                emp.Stations.Add(station);
+            }
+            _context.SaveChanges();
+            return NoContent();
+            //return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
         }
 
         // DELETE: api/Employees/5

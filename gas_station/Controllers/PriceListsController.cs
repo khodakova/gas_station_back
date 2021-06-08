@@ -123,7 +123,15 @@ namespace gas_station.Controllers
             // создаем именованные параметры (названия как в базе), прописываем их типы
             command.Parameters.Add(new NpgsqlParameter("@p_fuel_id", NpgsqlTypes.NpgsqlDbType.Integer) { Value = item.FuelId });
             command.Parameters.Add(new NpgsqlParameter("@p_begin_date", NpgsqlTypes.NpgsqlDbType.Date) { Value = item.BeginDate });
-            command.Parameters.Add(new NpgsqlParameter("@p_end_date", NpgsqlTypes.NpgsqlDbType.Date) { Value = item.EndDate });
+            if (item.EndDate != null)
+            {
+                command.Parameters.Add(new NpgsqlParameter("@p_end_date", NpgsqlTypes.NpgsqlDbType.Date) { Value = item.EndDate });
+            }
+            else
+            {
+                command.Parameters.Add(new NpgsqlParameter("@p_end_date", NpgsqlTypes.NpgsqlDbType.Date) { Value = DBNull.Value });
+            }
+            
             command.Parameters.Add(new NpgsqlParameter("@p_price", NpgsqlTypes.NpgsqlDbType.Real) { Value = item.Price });
             command.Parameters.Add(new NpgsqlParameter("@p_note", NpgsqlTypes.NpgsqlDbType.Varchar) { Value = "note" });
             // выполняем созданную команду и получаем курсор с данными
