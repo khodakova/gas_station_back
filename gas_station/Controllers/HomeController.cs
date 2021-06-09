@@ -21,7 +21,7 @@ namespace gas_station.Controllers
             var cols = new List<string>();
             for (var i = 0; i < reader.FieldCount; i++)
                 cols.Add(reader.GetName(i));
-
+            
             while (reader.Read())
                 results.Add(SerializeRow(cols, reader));
 

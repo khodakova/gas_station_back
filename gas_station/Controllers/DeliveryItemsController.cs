@@ -38,9 +38,9 @@ namespace gas_station.Controllers
 
         // получение всех единиц выбранной заявки
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Object>>> GetDeliveryItem(int id)
+        public async Task<ActionResult<List<delivery_item>>> GetDeliveryItem(int id)
         {
-            List<object> data = new();
+            List<delivery_item> data = new();
             using (_context)
             {
                 // прописываем соединение с базой

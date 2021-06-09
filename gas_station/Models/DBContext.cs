@@ -44,36 +44,6 @@ namespace gas_station.Models
         {
             
             Database.EnsureCreated();
-            //if (! Roles.Any())
-            //{
-            //    Roles.Add(new Role
-            //    {
-            //        Name = "Admin",
-            //        NormalizedName = "ADMIN"
-            //    });
-            //    Roles.Add(new Role
-            //    {
-            //        Name = "Employee",
-            //        NormalizedName = "EMPLOYEE"
-            //    });
-            //    Roles.Add(new Role
-            //    {
-            //        Name = "Client",
-            //        NormalizedName = "CLIENT"
-            //    });
-            //    SaveChanges();
-            //};
-            //if (!Users.Any())
-            //{
-            //    var adminModel = new User
-            //    {
-            //        UserName = "admin",
-            //        Password = "123123",
-            //        Email = "admin@admin.admin",
-            //        RoleId = 1
-            //    };
-            //    _userManager.CreateAsync(adminModel, adminModel.Password);
-            //};
             if (!Stations.Any())
             {
                 Stations.Add(new Station
